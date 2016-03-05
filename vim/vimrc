@@ -1,0 +1,121 @@
+set nocompatible
+set shell=/bin/bash
+
+so ~/.vim/plugins.vim
+
+filetype on 
+filetype plugin on 
+filetype indent on 
+syntax enable
+set backspace=indent,eol,start            "Make backspace behave like every other editor.
+let mapleader = ','                       "The default is \, but a comma is much better.
+set number                                "Let's activate line numbers.
+set autowrite                             "Save on buffer switch
+set background=dark
+
+
+
+set nowrap                      " don't wrap lines
+set tabstop=3                   " a tab is four spaces
+set smarttab
+set tags=tags
+set softtabstop=3              " when hitting <BS>, pretend like a tab is removed, even if spaces
+set expandtab                   " expand tabs by default (overloadable per file type later)
+set shiftwidth=3                " number of spaces to use for autoindenting
+set shiftround                  " use multiple of shiftwidth when indenting with '<' and '>'
+
+set smartcase                   " ignore case if search pattern is all lowercase
+
+set cursorline
+set splitright
+
+"-------------Visuals--------------"
+colorscheme gruvbox 
+
+set t_CO=256                              "Use 256 colors. This is useful for Terminal Vim.
+
+set guifont=Fira\ Mono\ for\ Powerline\ 12
+set linespace=12
+
+set guioptions-=m "Remove menu toolbar
+set guioptions-=T "remove toolbar
+set guioptions-=r "remove right-hand scroll bar
+set guioptions-=L "remove left-hand scroll bar
+set guioptions-=e "no gui tabs
+
+hi vertsplit guifg=bg guibg=bg
+
+let g:airline_powerline_fonts = 1
+set laststatus=2 "Always show the status bar
+
+"-------------Search--------------"
+set hlsearch                              "Highlight all matched terms.
+set incsearch                             "Incrementally highlight, as we type.
+
+"-------------Split Management--------------"
+set splitbelow                            "Make splits default to below...
+set splitright                            "And to the right. This feels more natural.
+
+
+"We'll set simpler mappings to switch between splits.
+nmap <C-J> <C-W><C-J>
+nmap <C-K> <C-W><C-K>
+nmap <C-H> <C-W><C-H>
+nmap <C-L> <C-W><C-L>
+
+"CTRL-P won't cache (seems fast enough for now)
+let g:ctrlp_use_caching = 0
+
+
+"-------------Mappings--------------"
+
+" Down is really the next line
+nnoremap j gj
+nnoremap k gk
+
+"Make tabs sensible
+nnoremap tl :tabnext<CR>
+nnoremap th :tabprev<CR>
+nnoremap tn :tabnew<CR>
+nnoremap td :tabclose<CR>
+
+"Make it easy to edit the Vimrc file.
+nmap <Leader>ev :tabedit $MYVIMRC<cr>
+
+"Add simple highlight removal.
+nmap <Leader><space> :nohlsearch<cr>
+
+imap jk <Esc>
+
+"Make NERDTree easier to toggle
+nmap <C-n> :NERDTreeToggle<cr>
+  
+nmap <C-e> :CtrlPMRUFiles<cr>
+nmap <C-m> :CtrlPBufTag<cr>
+
+nmap <S-Insert> "+p
+
+
+"-------------Plugins--------------"
+
+"/
+"/ CtrlP
+"/
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$|node_modules'
+let g:ctrlp_match_window = 'top,order:ttb,min:1,max:10,results:10'
+
+"/
+"/ NERDTree 
+"/
+let NERDTreeHijackNetrw = 0
+"Closes vim if NERDTree is the only buffer open
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+
+"-------------Auto-Commands--------------"
+"Automatically source the Vimrc file on save.
+
+augroup autosourcing
+   autocmd!
+   autocmd BufWritePost .vimrc source %
+augroup END
