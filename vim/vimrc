@@ -11,28 +11,32 @@ set backspace=indent,eol,start            "Make backspace behave like every othe
 let mapleader = ','                       "The default is \, but a comma is much better.
 set number                                "Let's activate line numbers.
 set autowrite                             "Save on buffer switch
-set background=dark
 
 
+set nobackup
+set nowritebackup
+set noswapfile    " http://robots.thoughtbot.com/post/18739402579/global-gitignore#comment-458413287
 
 set nowrap                      " don't wrap lines
-set tabstop=3                   " a tab is four spaces
+
+" Softtabs, 3 spaces
+set tabstop=3
+set shiftwidth=3
+set shiftround             " use multiple of shiftwidth when indenting with '<' and '>'
+set expandtab
 set smarttab
-set tags=tags
-set softtabstop=3              " when hitting <BS>, pretend like a tab is removed, even if spaces
-set expandtab                   " expand tabs by default (overloadable per file type later)
-set shiftwidth=3                " number of spaces to use for autoindenting
-set shiftround                  " use multiple of shiftwidth when indenting with '<' and '>'
+set softtabstop=3          " when hitting <BS>, pretend like a tab is removed, even if spaces
 
-set smartcase                   " ignore case if search pattern is all lowercase
 
+set smartcase              " ignore case if search pattern is all lowercase
 set cursorline
 set splitright
 
 "-------------Visuals--------------"
 colorscheme gruvbox 
+set background=dark
 
-set t_CO=256                              "Use 256 colors. This is useful for Terminal Vim.
+set t_CO=256                    "Use 256 colors. This is useful for Terminal Vim.
 
 set guifont=Fira\ Mono\ for\ Powerline\ 12
 set linespace=12
