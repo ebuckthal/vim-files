@@ -38,19 +38,8 @@ set background=dark
 
 set t_CO=256                    "Use 256 colors. This is useful for Terminal Vim.
 
-set guifont=Fira\ Mono\ for\ Powerline\ 12
-set linespace=12
-
-set guioptions-=m "Remove menu toolbar
-set guioptions-=T "remove toolbar
-set guioptions-=r "remove right-hand scroll bar
-set guioptions-=L "remove left-hand scroll bar
-set guioptions-=e "no gui tabs
-
 hi vertsplit guifg=bg guibg=bg
 
-let g:airline_powerline_fonts = 1
-set laststatus=2 "Always show the status bar
 
 "-------------Search--------------"
 set hlsearch                              "Highlight all matched terms.
@@ -67,8 +56,6 @@ nmap <C-K> <C-W><C-K>
 nmap <C-H> <C-W><C-H>
 nmap <C-L> <C-W><C-L>
 
-"CTRL-P won't cache (seems fast enough for now)
-let g:ctrlp_use_caching = 0
 
 
 "-------------Mappings--------------"
@@ -95,18 +82,23 @@ imap jk <Esc>
 nmap <C-n> :NERDTreeToggle<cr>
   
 nmap <C-e> :CtrlPMRUFiles<cr>
-nmap <C-m> :CtrlPBufTag<cr>
+"nmap <C-m> :CtrlPBufTag<cr>
 
 nmap <S-Insert> "+p
 
+" Switch between the last two files
+nnoremap <leader><leader> <c-^>
 
 "-------------Plugins--------------"
 
 "/
 "/ CtrlP
 "/
-let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$|node_modules'
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$|node_modules' 
 let g:ctrlp_match_window = 'top,order:ttb,min:1,max:10,results:10'
+
+"CTRL-P won't cache (seems fast enough for now)
+let g:ctrlp_use_caching = 0
 
 "/
 "/ NERDTree 
@@ -114,6 +106,45 @@ let g:ctrlp_match_window = 'top,order:ttb,min:1,max:10,results:10'
 let NERDTreeHijackNetrw = 0
 "Closes vim if NERDTree is the only buffer open
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+"/
+"/ Ag
+"/
+" Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
+if executable('ag')
+  " Use Ag over Grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag -Q -l --nocolor --hidden -g "" %s'
+endif
+
+
+"/
+"/ Syntastic
+"/
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+
+"/
+"/ Powerline
+"/
+set encoding=utf-8
+set laststatus=2
+let g:airline_powerline_fonts=1
+let g:airline#extensions#tabline#enabled = 1
+
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
 
 
 "-------------Auto-Commands--------------"
